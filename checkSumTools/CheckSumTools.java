@@ -5,13 +5,13 @@ public class CheckSumTools {
 
     }
 
-    public byte[] byteArrayAppend(byte[] data, byte b1, byte b2){
+    public byte[] byteArrayAppend(byte[] data, byte b1, byte b2) {
         byte[] testData = new byte[data.length + 2];
-        for(int i = 0; i < data.length; i++){
+        for ( int i = 0; i < data.length; i++ ) {
             testData[i] = data[i];
         }
         testData[data.length] = b1;
-        testData[data.length+1] = b2;
+        testData[data.length + 1] = b2;
         return testData;
     }
 
@@ -29,11 +29,12 @@ public class CheckSumTools {
         short total = 0;
         for ( int i = 0; i < data.length; i += 2 ) {
             short s = 0;
-            if ( i + 1 > data.length ) {
+            if ( i + 1 >= data.length ) {
                 s = (short) ( ( (data[i] & 0xFF) << 8) | (0));
+            } else {
+                s = (short) ( ( (data[i] & 0xFF) << 8) | (data[i + 1] & 0xFF));
+                total = shortAdd(s, total);
             }
-            s = (short) ( ( (data[i] & 0xFF) << 8) | (data[i + 1] & 0xFF));
-            total = shortAdd(s, total);
         }
         total = (short) ( ~total);
         return total;
@@ -43,11 +44,12 @@ public class CheckSumTools {
         short total = 0;
         for ( int i = 0; i < data.length; i += 2 ) {
             short s = 0;
-            if ( i + 1 > data.length ) {
+            if ( i + 1 >= data.length ) {
                 s = (short) ( ( (data[i] & 0xFF) << 8) | (0));
+            } else {
+                s = (short) ( ( (data[i] & 0xFF) << 8) | (data[i + 1] & 0xFF));
+                total = shortAdd(s, total);
             }
-            s = (short) ( ( (data[i] & 0xFF) << 8) | (data[i + 1] & 0xFF));
-            total = shortAdd(s, total);
         }
         total = (short) ( ~total);
         return total == 0;
